@@ -134,6 +134,93 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+
+const askCreateLogin = () => {
+    askQuestion('Do you want to create Login/SignUp? (yes/no) ', (answer) => {
+        const lowerCaseAnswer = answer.toLowerCase();
+        if (lowerCaseAnswer === 'yes') {
+            createLoginNavigation();
+            createLoginScreens();
+            createLoginScreen();
+            updateMainNavigation();
+        }
+    });
+};
+
+const createLoginNavigation = () => {
+    const loginNavigationPath = path.join(projectName, 'src/Navigation/LoginNavigation.jsx');
+    const loginNavigationContent = `
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { loginScreens } from './screens/LoginScreens';
+
+const Stack = createStackNavigator();
+
+function LoginNavigation() {
+    return (
+        <Stack.Navigator>
+            {loginScreens.map((screen, index) => (
+                <Stack.Screen
+                    key={index}
+                    name={screen.name}
+                    component={screen.component}
+                    options={screen.options}
+                />
+            ))}
+        </Stack.Navigator>
+    );
+}
+
+export default LoginNavigation;
+    `;
+    fs.writeFileSync(loginNavigationPath, loginNavigationContent, 'utf8');
+    console.log(`File created: ${loginNavigationPath}`);
+};
+
+const createLoginScreens = () => {
+    const loginScreensPath = path.join(projectName, 'src/Navigation/screens/LoginScreens.jsx');
+    const loginScreensContent = `
+import LoginScreen from '../../Screens/LoginScreen';
+
+export const loginScreens = [
+    {
+        name: "Login",
+        component: LoginScreen,
+        options: {headerShown: false}
+    },
+];
+    `;
+    fs.writeFileSync(loginScreensPath, loginScreensContent, 'utf8');
+    console.log(`File created: ${loginScreensPath}`);
+};
+
+const createLoginScreen = () => {
+    const loginScreenPath = path.join(projectName, 'src/Screens/LoginScreen.jsx');
+    const loginScreenContent = `
+import React from 'react';
+import { View, Text } from 'react-native';
+
+const LoginScreen = () => {
+    return (
+        <View>
+            <Text>Login Screen</Text>
+        </View>
+    );
+};
+
+export default LoginScreen;
+    `;
+    fs.writeFileSync(loginScreenPath, loginScreenContent, 'utf8');
+    console.log(`File created: ${loginScreenPath}`);
+};
+
+const updateMainNavigation = () => {
+    const mainNavigationPath = path.join(projectName, 'src/Navigation/MainNavigation.jsx');
+    let mainNavigationContent = fs.readFileSync(mainNavigationPath, 'utf8');
+    mainNavigationContent = `import LoginNavigation from './LoginNavigation';\n` + mainNavigationContent;
+    fs.writeFileSync(mainNavigationPath, mainNavigationContent, 'utf8');
+    console.log(`File updated: ${mainNavigationPath}`);
+};
 const askQuestion = (question, callback) => {
     rl.question(question, (answer) => {
         callback(answer);
@@ -179,44 +266,42 @@ const askScreenNames = (index) => {
     askQuestion(`Name for screen ${index + 1}: `, (screenName) => {
         screenNames.push(screenName);
         directories[`src/Screens/${screenName}`] = {
-            [`${screenName}.jsx`]: `
-                import React from 'react';
-                import { View, Text, TouchableOpacity } from 'react-native';
-                import { useNavigation } from '@react-navigation/native';
-                import { styles } from './${screenName}.style';
+            [`${screenName}.jsx`]:
+            `import React from 'react';
+            import { View, Text, TouchableOpacity } from 'react-native';
+            import { useNavigation } from '@react-navigation/native';
+            import { styles } from './${screenName}.style';
 
-                const ${screenName} = () => {
-                   const navigation = useNavigation();
+            const ${screenName} = () => {
+               const navigation = useNavigation();
 
-                    return (
-                        <View style={styles.container}>
-                            <Text style={styles.text}>${screenName} Screen</Text>
-                            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                                <Text>Go to Home Screen</Text>
-                            </TouchableOpacity>
-                        </View>
-                    );
-                };
+                return (
+                    <View style={styles.container}>
+                        <Text style={styles.text}>${screenName} Screen</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                            <Text>Go to Home Screen</Text>
+                        </TouchableOpacity>
+                    </View>
+                );
+            };
 
-                export default ${screenName};
-            `,
-            [`${screenName}.style.js`]: `
-                import { StyleSheet } from 'react-native';
+            export default ${screenName};`,
+            [`${screenName}.style.js`]:
+            `import { StyleSheet } from 'react-native';
 
-                export const styles = StyleSheet.create({
-                    container: {
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: '#F5FCFF',
-                    },
-                    text: {
-                        fontSize: 20,
-                        textAlign: 'center',
-                        margin: 10,
-                    },
-                });
-            `,
+            export const styles = StyleSheet.create({
+                container: {
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#F5FCFF',
+                },
+                text: {
+                    fontSize: 20,
+                    textAlign: 'center',
+                    margin: 10,
+                },
+            });`,
             ['index.js']: `
                 export { default } from './${screenName}';
             `
@@ -232,20 +317,13 @@ const askCreateApi = () => {
             createApi = true;
             directories['src/Api'] = {};
             directories['src/Api'][`api.config.js`] = '';
-            askQuestion('Do you want to set a BASE_URL? (yes/no) ', (answer) => {
-                const lowerCaseAnswer = answer.toLowerCase();
-                if (lowerCaseAnswer === 'yes') {
-                    askQuestion('Enter the BASE_URL: ', (answer) => {
-                        baseUrl = answer;
-                        directories['src/Api']['api.config.js'] = `
-                            import axios from 'axios';
-                            export const BASE_URL = 'http://${baseUrl}';
-                        `;
-                        initializeExpoProject();
-                    });
-                } else {
-                    initializeExpoProject();
-                }
+            directories['src/Api'][`api.functions.js`] = 'import { BASE_URL } from "./api.config.js";\n'; // Dodajte ovu liniju
+            askQuestion('Enter the BASE_URL: ', (answer) => {
+            baseUrl = answer;
+            directories['src/Api']['api.config.js'] =
+            `import axios from 'axios';
+             export const BASE_URL = 'http://${baseUrl}';`;
+            initializeExpoProject();
             });
         } else {
             console.log('Exiting the library.');
@@ -254,7 +332,6 @@ const askCreateApi = () => {
     });
 };
 
-
 const initializeExpoProject = () => {
     try {
         console.log('Initializing Expo project...');
@@ -262,11 +339,11 @@ const initializeExpoProject = () => {
         console.log('Expo project initialized successfully.');
         console.log('Creating directories and files...');
         createDirectoriesAndFiles();
+        askCreateLogin();
     } catch (error) {
         console.error(`Error initializing Expo project: ${error.message}`);
     }
 };
-
 
 const updateStackScreens = () => {
     // Update StackScreens.jsx file
@@ -279,7 +356,7 @@ const updateStackScreens = () => {
     stackScreensContent += '\nexport const stackScreens = [\n';
     for (const screenName in directories['src/Screens']) {
         const screenNameWithoutExtension = screenName.replace('.jsx', '');
-        stackScreensContent += `    {
+        stackScreensContent += `{
         name: "${screenNameWithoutExtension}",
         component: ${screenNameWithoutExtension},
         options: {headerShown: false}
@@ -327,7 +404,23 @@ const createDirectoriesAndFiles = () => {
 const installPackages = () => {
     try {
         console.log('Installing packages...');
-        execSync(`cd ${projectName} && npm install`, { stdio: 'inherit' });
+        // Define the array of packages
+        const packages = [
+            '@react-navigation/bottom-tabs',
+            '"@react-navigation/drawer"',
+            '@react-navigation/native',
+            '@react-navigation/stack',
+            '@react-navigation/native-stack',
+            'axios',
+            'react-native-safe-area-context',
+            'react-native-screens',
+        ];
+
+        // Loop through the array and install each package
+        for (const pack of packages) {
+            execSync(`cd ${projectName} && npm install ${pack}`, { stdio: 'inherit' });
+        }
+
         console.log('Packages installed successfully.');
     } catch (error) {
         console.error(`Error installing packages: ${error.message}`);

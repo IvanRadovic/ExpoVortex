@@ -10,8 +10,14 @@
   },
   "bin": {
     "navigation-starter": "scripts/createFiles.js",
-    "c-component": "scripts/createComponent.js",
-    "c-screen": "scripts/createScreen.js"
+    "c-c": "scripts/createComponent.js",
+    "c-s": "scripts/createScreen.js",
+    "c-n": "scripts/createNavigation.js",
+    "c-ns": "scripts/createNavigationScreen.js",
+    "c-h": "scripts/createHook.js",
+    "c-r": "scripts/createRedux.js",
+    "c-p": "scripts/createProvider.js",
+    "c-af": "scripts/createApiFunctions.js"
   },
   "repository": {
     "type": "git",
