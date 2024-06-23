@@ -18,7 +18,6 @@ const rl = readline.createInterface({
 });
 
 // Ask the user for the HTTP method
-// Ask the user for the HTTP method
 rl.question('Select the HTTP method (get, post, put, delete, all): ', (httpMethod) => {
     let functionCode = '';
     if (httpMethod === 'all') {
@@ -62,7 +61,7 @@ function generateFunctionCode(functionName, httpMethod) {
         functionParameters = '(data)';
     } else if (httpMethod === 'put') {
         functionBody =
-        `const response = await axios.${httpMethod}(\`\${BASE_URL}/${functionName.toLowerCase()}/\${id}\`, data);
+        `const response = await axios.${httpMethod}(\`\${BASE_URL}/${functionName.toLowerCase()}/\${id}/update\`, data);
         console.log("${functionName}", response.data);
         return response.data;`;
         functionParameters = '(id, data)';

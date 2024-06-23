@@ -147,80 +147,80 @@ const askCreateLogin = () => {
     });
 };
 
-const createLoginNavigation = () => {
-    const loginNavigationPath = path.join(projectName, 'src/Navigation/LoginNavigation.jsx');
-    const loginNavigationContent = `
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { loginScreens } from './screens/LoginScreens';
-
-const Stack = createStackNavigator();
-
-function LoginNavigation() {
-    return (
-        <Stack.Navigator>
-            {loginScreens.map((screen, index) => (
-                <Stack.Screen
-                    key={index}
-                    name={screen.name}
-                    component={screen.component}
-                    options={screen.options}
-                />
-            ))}
-        </Stack.Navigator>
-    );
-}
-
-export default LoginNavigation;
-    `;
-    fs.writeFileSync(loginNavigationPath, loginNavigationContent, 'utf8');
-    console.log(`File created: ${loginNavigationPath}`);
-};
-
-const createLoginScreens = () => {
-    const loginScreensPath = path.join(projectName, 'src/Navigation/screens/LoginScreens.jsx');
-    const loginScreensContent = `
-import LoginScreen from '../../Screens/LoginScreen';
-
-export const loginScreens = [
-    {
-        name: "Login",
-        component: LoginScreen,
-        options: {headerShown: false}
-    },
-];
-    `;
-    fs.writeFileSync(loginScreensPath, loginScreensContent, 'utf8');
-    console.log(`File created: ${loginScreensPath}`);
-};
-
-const createLoginScreen = () => {
-    const loginScreenPath = path.join(projectName, 'src/Screens/LoginScreen.jsx');
-    const loginScreenContent = `
-import React from 'react';
-import { View, Text } from 'react-native';
-
-const LoginScreen = () => {
-    return (
-        <View>
-            <Text>Login Screen</Text>
-        </View>
-    );
-};
-
-export default LoginScreen;
-    `;
-    fs.writeFileSync(loginScreenPath, loginScreenContent, 'utf8');
-    console.log(`File created: ${loginScreenPath}`);
-};
-
-const updateMainNavigation = () => {
-    const mainNavigationPath = path.join(projectName, 'src/Navigation/MainNavigation.jsx');
-    let mainNavigationContent = fs.readFileSync(mainNavigationPath, 'utf8');
-    mainNavigationContent = `import LoginNavigation from './LoginNavigation';\n` + mainNavigationContent;
-    fs.writeFileSync(mainNavigationPath, mainNavigationContent, 'utf8');
-    console.log(`File updated: ${mainNavigationPath}`);
-};
+// const createLoginNavigation = () => {
+//     const loginNavigationPath = path.join(projectName, 'src/Navigation/LoginNavigation.jsx');
+//     const loginNavigationContent = `
+// import React from 'react';
+// import { createStackNavigator } from '@react-navigation/stack';
+// import { loginScreens } from './screens/LoginScreens';
+//
+// const Stack = createStackNavigator();
+//
+// function LoginNavigation() {
+//     return (
+//         <Stack.Navigator>
+//             {loginScreens.map((screen, index) => (
+//                 <Stack.Screen
+//                     key={index}
+//                     name={screen.name}
+//                     component={screen.component}
+//                     options={screen.options}
+//                 />
+//             ))}
+//         </Stack.Navigator>
+//     );
+// }
+//
+// export default LoginNavigation;
+//     `;
+//     fs.writeFileSync(loginNavigationPath, loginNavigationContent, 'utf8');
+//     console.log(`File created: ${loginNavigationPath}`);
+// };
+//
+// const createLoginScreens = () => {
+//     const loginScreensPath = path.join(projectName, 'src/Navigation/screens/LoginScreens.jsx');
+//     const loginScreensContent = `
+// import LoginScreen from '../../Screens/LoginScreen';
+//
+// export const loginScreens = [
+//     {
+//         name: "Login",
+//         component: LoginScreen,
+//         options: {headerShown: false}
+//     },
+// ];
+//     `;
+//     fs.writeFileSync(loginScreensPath, loginScreensContent, 'utf8');
+//     console.log(`File created: ${loginScreensPath}`);
+// };
+//
+// const createLoginScreen = () => {
+//     const loginScreenPath = path.join(projectName, 'src/Screens/LoginScreen.jsx');
+//     const loginScreenContent = `
+// import React from 'react';
+// import { View, Text } from 'react-native';
+//
+// const LoginScreen = () => {
+//     return (
+//         <View>
+//             <Text>Login Screen</Text>
+//         </View>
+//     );
+// };
+//
+// export default LoginScreen;
+//     `;
+//     fs.writeFileSync(loginScreenPath, loginScreenContent, 'utf8');
+//     console.log(`File created: ${loginScreenPath}`);
+// };
+//
+// const updateMainNavigation = () => {
+//     const mainNavigationPath = path.join(projectName, 'src/Navigation/MainNavigation.jsx');
+//     let mainNavigationContent = fs.readFileSync(mainNavigationPath, 'utf8');
+//     mainNavigationContent = `import LoginNavigation from './LoginNavigation';\n` + mainNavigationContent;
+//     fs.writeFileSync(mainNavigationPath, mainNavigationContent, 'utf8');
+//     console.log(`File updated: ${mainNavigationPath}`);
+// };
 const askQuestion = (question, callback) => {
     rl.question(question, (answer) => {
         callback(answer);
@@ -339,7 +339,6 @@ const initializeExpoProject = () => {
         console.log('Expo project initialized successfully.');
         console.log('Creating directories and files...');
         createDirectoriesAndFiles();
-        askCreateLogin();
     } catch (error) {
         console.error(`Error initializing Expo project: ${error.message}`);
     }
