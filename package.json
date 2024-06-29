@@ -11,14 +11,14 @@
   "bin": {
     "navigation-starter": "scripts/createFiles.js",
     "c-c": "scripts/createComponent.js",
+    "c-cs": "scripts/createScreenComponent.js",
+    "c-saf": "scripts/createScreenApiFunc.js",
     "c-s": "scripts/createScreen.js",
     "c-n": "scripts/createNavigation.js",
-    "c-ns": "scripts/createNavigationScreen.js",
     "c-h": "scripts/createHook.js",
     "c-r": "scripts/createRedux.js",
-    "c-p": "scripts/createProvider.js",
     "c-af": "scripts/createApiFunctions.js",
-    "c-rr": "scripts/reducerCreate.js",
+    "c-rr": "scripts/createReducer.js",
     "c-rs": "scripts/createReduxStore.js"
   },
   "repository": {
