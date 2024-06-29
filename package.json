@@ -17,7 +17,9 @@
     "c-h": "scripts/createHook.js",
     "c-r": "scripts/createRedux.js",
     "c-p": "scripts/createProvider.js",
-    "c-af": "scripts/createApiFunctions.js"
+    "c-af": "scripts/createApiFunctions.js",
+    "c-rr": "scripts/reducerCreate.js",
+    "c-rs": "scripts/createReduxStore.js"
   },
   "repository": {
     "type": "git",

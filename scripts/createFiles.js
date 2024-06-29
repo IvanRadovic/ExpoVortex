@@ -34,7 +34,8 @@ function AppNavigation() {
 }
 
 export default AppNavigation;
-`, 'MainNavigation.jsx': `
+        `,
+        'MainNavigation.jsx': `
 import { NavigationContainer } from '@react-navigation/native';
 
 import AppNavigation from './AppNavigation';
@@ -46,7 +47,32 @@ export default function MainNavigation() {
         </NavigationContainer>
     );
 }
-`},
+        `,
+        'LoginNavigation.js': `
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { loginScreens } from './screens/LoginScreens';
+
+const Stack = createStackNavigator();
+
+function LoginNavigation() {
+    return (
+        <Stack.Navigator>
+            {loginScreens.map((screen, index) => (
+                <Stack.Screen
+                    key={index}
+                    name={screen.name}
+                    component={screen.component}
+                    options={screen.options}
+                />
+            ))}
+        </Stack.Navigator>
+    );
+}
+
+export default LoginNavigation;
+        `,
+    },
     'src/Navigation/screens': {
         'StackScreens.jsx': `
 import HomeScreen from '../Screens/HomeScreen';
@@ -64,7 +90,18 @@ export const stackScreens = [
         options: {headerShown: false}
     }
 ];
-`
+        `,
+        'LoginScreens.jsx': `
+import LoginScreen from '../../Screens/LoginScreen';
+
+export const loginScreens = [
+    {
+        name: "Login",
+        component: LoginScreen,
+        options: {headerShown: false}
+    },
+];
+        `,
     },
     'src/Screens': {
         'HomeScreen.jsx': `
@@ -100,7 +137,8 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-`, 'AboutScreen.jsx': `
+        `,
+        'AboutScreen.jsx': `
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -119,7 +157,50 @@ function AboutScreen() {
 }
 
 export default AboutScreen;
-`
+        `,
+        'LoginScreen': {
+            'LoginScreen.jsx': `
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { styles } from './LoginScreen.style';
+
+const LoginScreen = () => {
+   const navigation = useNavigation();
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.text}>Login Screen</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <Text>Go to Home Screen</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+export default LoginScreen;
+            `,
+            'LoginScreen.style.js': `
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    },
+    text: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
+});
+            `,
+            'index.js': `
+export { default } from './LoginScreen';
+            `,
+        },
     },
 };
 
