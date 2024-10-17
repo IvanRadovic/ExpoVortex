@@ -486,14 +486,18 @@ const installPackages = () => {
         console.log('Installing packages...');
         // Define the array of packages
         const packages = [
-            '@react-navigation/bottom-tabs',
-            '"@react-navigation/drawer"',
+            // '@react-navigation/bottom-tabs',
+            // '"@react-navigation/drawer"',
             '@react-navigation/native',
             '@react-navigation/stack',
             '@react-navigation/native-stack',
             'axios',
             'react-native-safe-area-context',
             'react-native-screens',
+            'react-native-gesture-handler',
+            'react-native-toast-message',
+            '@tanstack/react-query',
+            'react-hook-form'
         ];
 
         // Loop through the array and install each package
