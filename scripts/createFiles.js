@@ -10,7 +10,7 @@ const { execSync } = require('child_process');
 
 // Define the directories and files to be created
 let directories = {
-    'src/Navigation': {
+    'Navigation': {
         'AppNavigation.jsx': `
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -73,7 +73,7 @@ function LoginNavigation() {
 export default LoginNavigation;
         `,
     },
-    'src/Navigation/screens': {
+    'app/Navigation/screens': {
         'StackScreens.jsx': `
 import HomeScreen from '../Screens/HomeScreen';
 import AboutScreen from "../Screens/AboutScreen";
@@ -103,7 +103,7 @@ export const loginScreens = [
 ];
         `,
     },
-    'src/Screens': {
+    'app/Screens': {
         'HomeScreen.jsx': `
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
@@ -229,7 +229,7 @@ const askCreateLogin = () => {
 };
 
 // const createLoginNavigation = () => {
-//     const loginNavigationPath = path.join(projectName, 'src/Navigation/LoginNavigation.jsx');
+//     const loginNavigationPath = path.join(projectName, 'app/Navigation/LoginNavigation.jsx');
 //     const loginNavigationContent = `
 // import React from 'react';
 // import { createStackNavigator } from '@react-navigation/stack';
@@ -259,7 +259,7 @@ const askCreateLogin = () => {
 // };
 //
 // const createLoginScreens = () => {
-//     const loginScreensPath = path.join(projectName, 'src/Navigation/screens/LoginScreens.jsx');
+//     const loginScreensPath = path.join(projectName, 'app/Navigation/screens/LoginScreens.jsx');
 //     const loginScreensContent = `
 // import LoginScreen from '../../Screens/LoginScreen';
 //
@@ -276,7 +276,7 @@ const askCreateLogin = () => {
 // };
 //
 // const createLoginScreen = () => {
-//     const loginScreenPath = path.join(projectName, 'src/Screens/LoginScreen.jsx');
+//     const loginScreenPath = path.join(projectName, 'app/Screens/LoginScreen.jsx');
 //     const loginScreenContent = `
 // import React from 'react';
 // import { View, Text } from 'react-native';
@@ -296,7 +296,7 @@ const askCreateLogin = () => {
 // };
 //
 // const updateMainNavigation = () => {
-//     const mainNavigationPath = path.join(projectName, 'src/Navigation/MainNavigation.jsx');
+//     const mainNavigationPath = path.join(projectName, 'app/Navigation/MainNavigation.jsx');
 //     let mainNavigationContent = fs.readFileSync(mainNavigationPath, 'utf8');
 //     mainNavigationContent = `import LoginNavigation from './LoginNavigation';\n` + mainNavigationContent;
 //     fs.writeFileSync(mainNavigationPath, mainNavigationContent, 'utf8');
@@ -328,7 +328,7 @@ const askForScreens = () => {
                 }
 
                 numberOfScreens = count;
-                directories['src/Screens'] = {};
+                directories['app/Screens'] = {};
                 askScreenNames(0);
             });
         } else {
@@ -346,7 +346,7 @@ const askScreenNames = (index) => {
     // Ask user for screen name
     askQuestion(`Name for screen ${index + 1}: `, (screenName) => {
         screenNames.push(screenName);
-        directories[`src/Screens/${screenName}`] = {
+        directories[`app/Screens/${screenName}`] = {
             [`${screenName}.jsx`]:
             `import React from 'react';
             import { View, Text, TouchableOpacity } from 'react-native';
@@ -396,12 +396,12 @@ const askCreateApi = () => {
         const lowerCaseAnswer = answer.toLowerCase();
         if (lowerCaseAnswer === 'yes') {
             createApi = true;
-            directories['src/Api'] = {};
-            directories['src/Api'][`api.config.js`] = '';
-            directories['src/Api'][`api.functions.js`] = 'import { BASE_URL } from "./api.config.js";\n'; // Dodajte ovu liniju
+            directories['Api'] = {};
+            directories['Api'][`api.config.js`] = '';
+            directories['Api'][`api.functions.js`] = 'import { BASE_URL } from "./api.config.js";\n';
             askQuestion('Enter the BASE_URL: ', (answer) => {
             baseUrl = answer;
-            directories['src/Api']['api.config.js'] =
+            directories['Api']['api.config.js'] =
             `import axios from 'axios';
              export const BASE_URL = 'http://${baseUrl}';`;
             initializeExpoProject();
@@ -416,7 +416,7 @@ const askCreateApi = () => {
 const initializeExpoProject = () => {
     try {
         console.log('Initializing Expo project...');
-        execSync(`npx create-expo-app@latest ${projectName} --template blank`, { stdio: 'inherit' });
+        execSync(`npx create-expo-app ${projectName} --template tabs`, { stdio: 'inherit' });
         console.log('Expo project initialized successfully.');
         console.log('Creating directories and files...');
         createDirectoriesAndFiles();
@@ -427,14 +427,14 @@ const initializeExpoProject = () => {
 
 const updateStackScreens = () => {
     // Update StackScreens.jsx file
-    const stackScreensPath = path.join(projectName, 'src/Navigation/screens/StackScreens.jsx');
+    const stackScreensPath = path.join(projectName, 'app/Navigation/screens/StackScreens.jsx');
     let stackScreensContent = '';
-    for (const screenName in directories['src/Screens']) {
+    for (const screenName in directories['app/Screens']) {
         const screenNameWithoutExtension = screenName.replace('.jsx', '');
         stackScreensContent += `import ${screenNameWithoutExtension} from '../../Screens/${screenName}';\n`;
     }
     stackScreensContent += '\nexport const stackScreens = [\n';
-    for (const screenName in directories['src/Screens']) {
+    for (const screenName in directories['app/Screens']) {
         const screenNameWithoutExtension = screenName.replace('.jsx', '');
         stackScreensContent += `{
         name: "${screenNameWithoutExtension}",
@@ -488,9 +488,9 @@ const installPackages = () => {
         const packages = [
             // '@react-navigation/bottom-tabs',
             // '"@react-navigation/drawer"',
-            '@react-navigation/native',
-            '@react-navigation/stack',
-            '@react-navigation/native-stack',
+            // '@react-navigation/native',
+            // '@react-navigation/stack',
+            // '@react-navigation/native-stack',
             'axios',
             'react-native-safe-area-context',
             'react-native-screens',

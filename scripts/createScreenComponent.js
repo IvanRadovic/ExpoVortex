@@ -205,13 +205,13 @@ rl.question('Which type of component do you want to create? ', (componentAnswer)
         const chosenComponent = componentTypes[Object.keys(componentTypes)[typeIndex]];
 
         // Check if screens directory exists
-        if (!fs.existsSync('src/screens')) {
+        if (!fs.existsSync('app/screens')) {
             console.log('Screens directory does not exist.');
             return;
         }
 
         // Get all screen directories
-        const screens = fs.readdirSync('src/screens', { withFileTypes: true })
+        const screens = fs.readdirSync('app/screens', { withFileTypes: true })
             .filter(dirent => dirent.isDirectory())
             .map(dirent => dirent.name);
 
@@ -227,7 +227,7 @@ rl.question('Which type of component do you want to create? ', (componentAnswer)
                 const chosenScreen = screens[screenIndex];
 
                 // Create component directory
-                const componentDir = `src/screens/${chosenScreen}/components/${componentName}`;
+                const componentDir = `app/screens/${chosenScreen}/components/${componentName}`;
                 if (!fs.existsSync(componentDir)) {
                     fs.mkdirSync(componentDir, { recursive: true });
                     console.log(`Directory created: ${componentDir}`);

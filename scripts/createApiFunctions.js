@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
 
-const apiFunctionsPath = path.join('src', 'Api', 'api.functions.js');
+const apiFunctionsPath = path.join('app', 'Api', 'api.functions.js');
 
 // Get the function name from the command line arguments
 const functionName = process.argv[2];

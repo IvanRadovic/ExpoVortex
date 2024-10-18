@@ -15,13 +15,13 @@ const rl = readline.createInterface({
 });
 
 // Check if screens directory exists
-if (!fs.existsSync('src/screens')) {
+if (!fs.existsSync('app/screens')) {
     console.log('Screens directory does not exist.');
     process.exit(1);
 }
 
 // Get all screen directories
-const screens = fs.readdirSync('src/screens', { withFileTypes: true })
+const screens = fs.readdirSync('app/screens', { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
 
@@ -42,7 +42,7 @@ rl.question('In which screen do you want to create the api.js? ', (screenAnswer)
         const chosenScreen = screens[screenIndex];
 
         // Create api.js file
-        const apiFile = `src/screens/${chosenScreen}/api.js`;
+        const apiFile = `app/screens/${chosenScreen}/api.js`;
         let apiContent = '';
 
         // If the file does not exist, add the imports

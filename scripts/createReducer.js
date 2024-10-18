@@ -3,15 +3,15 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'fs';
 import { join } from 'path';
 
 const createReducer = (reducerName) => {
-    // Check if src/Redux or src/redux directory exists
+    // Check if app/Redux or app/redux directory exists
     let reduxDir = '';
-    if (existsSync('src/Redux')) {
-        reduxDir = 'src/Redux';
-    } else if (existsSync('src/redux')) {
-        reduxDir = 'src/redux';
+    if (existsSync('app/Redux')) {
+        reduxDir = 'app/Redux';
+    } else if (existsSync('app/redux')) {
+        reduxDir = 'app/redux';
     } else {
-        mkdirSync('src/Redux', { recursive: true });
-        reduxDir = 'src/Redux';
+        mkdirSync('app/Redux', { recursive: true });
+        reduxDir = 'app/Redux';
     }
 
     // Create reducer directory

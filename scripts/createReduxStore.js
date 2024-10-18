@@ -3,16 +3,16 @@ import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 const createStore = () => {
-    // Check if src/Redux or src/redux directory exists
+    // Check if app/Redux or app/redux directory exists
     let reduxDir = '';
-    if (existsSync('src/Redux')) {
-        reduxDir = 'src/Redux';
-    } else if (existsSync('src/redux')) {
-        reduxDir = 'src/redux';
+    if (existsSync('app/Redux')) {
+        reduxDir = 'app/Redux';
+    } else if (existsSync('app/redux')) {
+        reduxDir = 'app/redux';
     } else {
-        // Create src/Redux directory if it doesn't exist
-        mkdirSync('src/Redux', { recursive: true });
-        reduxDir = 'src/Redux';
+        // Create app/Redux directory if it doesn't exist
+        mkdirSync('app/Redux', { recursive: true });
+        reduxDir = 'app/Redux';
     }
 
     // Create store.js file

@@ -1,0 +1,13 @@
+Za struktura u app ne smmije da ima Screen folder nego samo da su podfolderi u Expo-router-tabs folderu
+
+#primjeri
+```
+home(folder)
+  -index.txs
+  -HomeScreen.tsx
+  -HomeScreen.styles.js
+  -components(folder)
+    -header.js
+    -footer.js
+    -content.js
+```

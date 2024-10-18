@@ -27,7 +27,7 @@ if (!screenName) {
 * @returns {void}
 * */
 const directories = {
-    [`src/Screens/${screenName}`]: {
+    [`app/Screens/${screenName}`]: {
         [`${screenName}.jsx`]: `
             import React from 'react';
             import { View, Text, TouchableOpacity } from 'react-native';
@@ -93,7 +93,7 @@ for (const [dir, files] of Object.entries(directories)) {
 }
 
 // Get the list of screen files
-const screensDir = 'src/Navigation/screens';
+const screensDir = 'app/Navigation/screens';
 if (!fs.existsSync(screensDir)) {
     fs.mkdirSync(screensDir, {recursive: true});
     console.log(`Directory created: ${screensDir}`);

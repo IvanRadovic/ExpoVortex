@@ -235,7 +235,7 @@ rl.question('Which type of component do you want to create? ', (componentAnswer)
 
 function createComponent(files) {
     // Create the directories and files
-    const dir = `src/components/${componentName}`;
+    const dir = `components/${componentName}`;
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, {recursive: true});
         console.log(`Directory created: ${dir}`);
